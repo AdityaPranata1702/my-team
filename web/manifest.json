@@ -1,6 +1,6 @@
 {
-    "name": "project_my_team",
-    "short_name": "project_my_team",
+    "name": "aplikasi_pesanan",
+    "short_name": "aplikasi_pesanan",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
