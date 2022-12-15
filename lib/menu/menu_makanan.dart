@@ -6,6 +6,7 @@ import 'package:aplikasi_pesanan/models/menu_model.dart';
 import 'package:http/http.dart' as myHttp;
 import 'package:aplikasi_pesanan/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:open_whatsapp/open_whatsapp.dart';
 
 class Makanan extends StatefulWidget {
   const Makanan({super.key});
@@ -15,6 +16,8 @@ class Makanan extends StatefulWidget {
 }
 
 class _MakananState extends State<Makanan> {
+  TextEditingController namaController = TextEditingController();
+  TextEditingController nomorMejaController = TextEditingController();
   final String urlMenu =
       "https://script.google.com/macros/s/AKfycbxOlpRDecWrVvE8A-8nNCWQZckcXJ7gjlPPuXY62BXNKABziVA14KvDPicoXjmVXZUq/exec";
 
@@ -35,7 +38,52 @@ class _MakananState extends State<Makanan> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            content: Container(height: 280),
+            content: Container(height: 280, child: Column(children: [
+              Text("Nama", style: GoogleFonts.montserrat(),
+              ),
+              TextFormField(
+                controller: namaController,
+                decoration: InputDecoration(border: OutlineInputBorder()),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text("Nomor Meja", style: GoogleFonts.montserrat(),
+              ),
+              TextFormField(
+                controller: nomorMejaController,
+                decoration: InputDecoration(border: OutlineInputBorder()),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Consumer<CartProvider>(
+                builder: (context, value, _) {
+                  String strPesanan = "";
+                  value.cart.forEach((element) {
+                    strPesanan = strPesanan + "\n" + 
+                    element.name + " {" + 
+                    element.quantity.toString() + "}";
+                  });
+                return  ElevatedButton(
+                  onPressed: () async {
+                    String phone = "6282148033326";
+                    String pesanan = 
+                      "Nama : " + 
+                      namaController.text + 
+                      "\n" +
+                      "Nomor Meja : " + 
+                      nomorMejaController.text + 
+                      "\n" +
+                      "Pesanan : " + 
+                      "\n" + 
+                      strPesanan;
+                    FlutterOpenWhatsapp.sendSingleMessage(phone, pesanan);
+                    print(pesanan);
+                }, 
+                child: Text("Pesan Sekarang"));
+              },),
+            ]),),
           );
         });
   }
@@ -141,7 +189,8 @@ class _MakananState extends State<Makanan> {
                                                               context,
                                                               listen: false)
                                                           .addRemove(
-                                                              menu.id, false);
+                                                            menu.name,
+                                                            menu.id, false);
                                                     },
                                                     icon: Icon(
                                                       Icons.remove_circle,
@@ -180,7 +229,8 @@ class _MakananState extends State<Makanan> {
                                                               context,
                                                               listen: false)
                                                           .addRemove(
-                                                              menu.id, true);
+                                                            menu.name,
+                                                            menu.id, true);
                                                     },
                                                     icon: Icon(
                                                       Icons.add_circle,

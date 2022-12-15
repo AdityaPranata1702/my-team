@@ -128,7 +128,8 @@ class _MinumanState extends State<Minuman> {
                                                               context,
                                                               listen: false)
                                                           .addRemove(
-                                                              menu.id, false);
+                                                            menu.name,
+                                                            menu.id, false);
                                                     },
                                                     icon: Icon(
                                                       Icons.remove_circle,
@@ -167,7 +168,8 @@ class _MinumanState extends State<Minuman> {
                                                               context,
                                                               listen: false)
                                                           .addRemove(
-                                                              menu.id, true);
+                                                            menu.name,
+                                                            menu.id, true);
                                                     },
                                                     icon: Icon(
                                                       Icons.add_circle,
