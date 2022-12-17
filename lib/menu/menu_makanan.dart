@@ -78,7 +78,7 @@ class _MakananState extends State<Makanan> {
                       "Pesanan : " + 
                       "\n" + 
                       strPesanan;
-                    FlutterOpenWhatsapp.sendSingleMessage(phone, pesanan);
+                    FlutterOpenWhatsapp.sendSingleMessage("6282148033326", pesanan);
                     print(pesanan);
                 }, 
                 child: Text("Pesan Sekarang"));
